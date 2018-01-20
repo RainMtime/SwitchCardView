@@ -1,5 +1,6 @@
 package com.example.chunyu.switchcardview;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.widget.Button;
 
 import com.example.chunyu.switchcardview.adapter.SwitchCardViewAdapter;
 import com.example.chunyu.switchcardview.view.SwitchCardView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+        initCardViewAdapter();
     }
 
     private void initView() {
@@ -36,10 +41,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerViewBtn.setOnClickListener(this);
         mListViewTestBtn.setOnClickListener(this);
 
+
     }
 
     private void initCardViewAdapter() {
-         mSwitchCardViewAdapter = new SwitchCardViewAdapter();
+        mSwitchCardViewAdapter = new SwitchCardViewAdapter(this);
+        mSwitchCardViewAdapter.setData(mockDatas());
+        mSwitchCardView.setAdapter(mSwitchCardViewAdapter);
+    }
+
+    @NonNull
+    private ArrayList<String> mockDatas() {
+        ArrayList<String> datas = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            datas.add("我是第" + i + "个卡片");
+        }
+        return datas;
     }
 
     @Override

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_graycard2_random"
+    android:layout_height="100dp">
+
+    <TextView
+        android:id="@+id/cardview_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="人间一小雨"
+        android:textColor="@color/colorAccent" />
+
+</RelativeLayout>

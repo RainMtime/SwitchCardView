@@ -5,12 +5,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -22,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.HashMap;
+import java.util.Observable;
 
 /**
  * Created by 人间一小雨 on 2018/1/20 上午11:21
@@ -53,7 +52,7 @@ public class SwitchCardView extends RelativeLayout {
 
     private int mCurrentIndex = 0;
 
-    private AdapterDataSetObserver mDataSetObserver;
+    private CardViewAdapterDataSetObserver mDataSetObserver;
 
 
     /**
@@ -106,16 +105,11 @@ public class SwitchCardView extends RelativeLayout {
             throw new IllegalStateException("DecorView is null");
         }
 
-        mDataSetObserver = new AdapterDataSetObserver();
-
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (mAdapter !=null && )
-
-
-        if (mAdapter != null) {
+        if (checkValid()) {
             //利用dispatchTouchEvent中的事件，进行滑动动作的监听。
             mNeedIntercept = isDispatchTouchEvent(event);
         } else {
@@ -127,7 +121,7 @@ public class SwitchCardView extends RelativeLayout {
 
     private boolean isDispatchTouchEvent(MotionEvent event) {
         boolean comsumed = false;
-        if (mAdapter.getItemCount() >= 1) {
+        if (checkValid()) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     getParent().requestDisallowInterceptTouchEvent(true);
@@ -314,8 +308,6 @@ public class SwitchCardView extends RelativeLayout {
                 mTopCardView.setVisibility(View.VISIBLE);
                 mBottomCardView.setRotation(BOTTOM_VIEW_ROTATION);
                 mBottomCardView.setAlpha(0.0f);
-
-
                 mAdapter.onReleaseTouchForBeginSwitchAnim();
 
                 animationSet.playTogether(
@@ -424,12 +416,22 @@ public class SwitchCardView extends RelativeLayout {
 
 
     public void setAdapter(@NonNull SwitchCardView.Adapter adapter) {
+
         if (adapter == mAdapter) {
             return;
         }
+
+        if (mAdapter != null && mDataSetObserver != null) {
+            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+        }
+
         mAdapter = adapter;
+        mDataSetObserver = new CardViewAdapterDataSetObserver();
+        mAdapter.registerDataSetObserver(mDataSetObserver);
         removeAllViews();
         createChildView();
+
+        mAdapter.notifyChangedToIndex(0);
     }
 
     private void createChildView() {
@@ -442,9 +444,6 @@ public class SwitchCardView extends RelativeLayout {
         mBottomCardView.setAlpha(0.0f);
     }
 
-    public int getCurrentIndex() {
-        return mAdapter != null ? mAdapter.getCurrentIndex() : 0;
-    }
 
     @Nullable
     public Adapter getAdapter() {
@@ -452,7 +451,26 @@ public class SwitchCardView extends RelativeLayout {
     }
 
 
-    public abstract static class Adapter {
+    public static abstract class Adapter extends Observable {
+
+        private final CardViewDataSetObservable mCardViewDataSetObservable = new CardViewDataSetObservable();
+
+        public void registerDataSetObserver(CardViewAdapterDataSetObserver observer) {
+            mCardViewDataSetObservable.registerObserver(observer);
+        }
+
+        public void unregisterDataSetObserver(CardViewAdapterDataSetObserver observer) {
+            mCardViewDataSetObservable.unregisterObserver(observer);
+        }
+
+        /**
+         * Notifies the attached observers that the underlying data has been changed
+         * and any View reflecting the data set should refresh itself.
+         */
+        public void notifyChangedToIndex(int position) {
+            mCardViewDataSetObservable.notifyChangedToIndex(position);
+        }
+
 
         /**
          * 这个函数的目的，是创建一个最顶部的View，也就是无滑动的时候，展示数据的那个View。
@@ -494,9 +512,6 @@ public class SwitchCardView extends RelativeLayout {
         }
 
 
-        public abstract int getCurrentIndex();
-
-
         /**
          * 调用时机:当手指已经拖动出一个卡片View（Bitmap），但是移动的距离比较小，没有超过距离阀值，
          * 松开手之后的动画(把TopView和BottomView摆放回原来的位置的动画)开始的那一刻调用。
@@ -524,18 +539,46 @@ public class SwitchCardView extends RelativeLayout {
          * @param position 卡片数据position
          * @param view     卡片中的item（其实是反复的利用topView和bottomView）
          */
-        public abstract void renderView(int position, @NonNull View view);
+
+        public abstract void renderView(int position, View view);
+
     }
 
-    class AdapterDataSetObserver extends DataSetObserver{
-        @Override
-        public void onChanged() {
-            super.onChanged();
-        }
+    private boolean checkValid() {
+        return mAdapter != null ? mAdapter.getItemCount() > 0 : false;
+    }
 
-        @Override
-        public void onInvalidated() {
-            super.onInvalidated();
+    private class CardViewAdapterDataSetObserver {
+
+        public void onChangedToIndex(int index) {
+            if (checkValid()) {
+                if (mTopCardView != null && mBottomCardView != null) {
+                    int itemCount = mAdapter.getItemCount();
+                    mCurrentIndex = index % itemCount;
+                    mAdapter.renderView(mCurrentIndex, mTopCardView);
+                    mAdapter.renderView((mCurrentIndex + 1) % itemCount, mBottomCardView);
+                }
+            }
+        }
+    }
+
+
+    private static class CardViewDataSetObservable extends android.database.Observable<CardViewAdapterDataSetObserver> {
+        /**
+         * Invokes {@link CardViewAdapterDataSetObserver#onChangedToIndex(int)} on each observer.
+         * Called when you wanted page to Index  CardView
+         * Note:if itemCount < 0 ,or adapter is null ,this Method will not work!
+         */
+        public void notifyChangedToIndex(int position) {
+            synchronized (mObservers) {
+                // since onChanged() is implemented by the app, it could do anything, including
+                // removing itself from {@link mObservers} - and that could cause problems if
+                // an iterator is used on the ArrayList {@link mObservers}.
+                // to avoid such problems, just march thru the list in the reverse order.
+                for (int i = mObservers.size() - 1; i >= 0; i--) {
+                    mObservers.get(i).onChangedToIndex(position);
+                }
+            }
         }
     }
 
