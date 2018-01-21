@@ -49,12 +49,12 @@ public class SwitchCardViewAdapter extends SwitchCardView.Adapter {
         return mData.size();
     }
 
-    public void setData(ArrayList<String> datas) {
+    public void setData(ArrayList<String> datas,int changeToIndex) {
         if (datas != null) {
             mData.clear();
             mData.addAll(datas);
         }
-        notifyChangedToIndex(0);
+        notifyChangedToIndex(changeToIndex);
     }
 
     @Override

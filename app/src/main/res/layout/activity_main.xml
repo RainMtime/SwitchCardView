@@ -13,17 +13,12 @@
         android:layout_height="50dp"
         android:text="普通界面" />
 
-    <Button
-        android:id="@+id/listview_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="嵌入RecyclerView" />
 
     <Button
         android:id="@+id/recyclerViewbtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="潜入ListView" />
+        android:text="卡片样式嵌入RecyclerView场景" />
 
 
     <com.example.chunyu.switchcardview.view.SwitchCardView

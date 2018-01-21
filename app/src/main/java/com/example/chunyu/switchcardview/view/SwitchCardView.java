@@ -401,8 +401,6 @@ public class SwitchCardView extends RelativeLayout {
         mFloatingViewMaps.put(String.valueOf(tempImageView.hashCode()), tempImageView);
         mFloatingView = tempImageView;
         mTopCardView.setVisibility(View.INVISIBLE);
-
-
     }
 
     @Nullable
@@ -449,6 +447,15 @@ public class SwitchCardView extends RelativeLayout {
     @Nullable
     public Adapter getAdapter() {
         return mAdapter;
+    }
+
+    /**
+     * @return 返回当前展示的卡片View，的position.
+     * 例如：当卡片View在ListView/RecyclerView中使用的时候，滑动界面出界面，需要业务记录一下，滑动到哪里了（position），
+     * 方便等在滑动回来的时候，bindData的时候，把原来的位置给设置回来{@link Adapter#notifyChangedToIndex(int)}，这样展示的卡片，还是原来的那个。
+     */
+    public int getCurrentIndex() {
+        return mCurrentIndex;
     }
 
 
