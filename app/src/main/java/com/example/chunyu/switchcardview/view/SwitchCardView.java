@@ -19,7 +19,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -196,26 +195,34 @@ public class SwitchCardView extends RelativeLayout {
 
 
         //卡片跟手滑动
-        float translationX = mFloatingView.getTranslationX();
-        float translationY = mFloatingView.getTranslationY();
+        final float translationX = mFloatingView.getTranslationX();
+        final float translationY = mFloatingView.getTranslationY();
         mFloatingView.setTranslationY(translationY + y);
         mFloatingView.setTranslationX(translationX + x);
 
-        float widthRule = mFloatingView.getWidth();
-        float heightRule = mFloatingView.getHeight();
+        final float floatingViewRotation;
+        float floatingViewAlpha;
 
-        //套用y = x平方模型，来模拟，非线性动画效果()。
-        float rate = (float) Math.pow(Math.sqrt(sumX * sumX + sumY * sumY) / widthRule, 2.0);
-        //角度是线性变化（根据x轴的偏移）
-        float floatingViewRotation = FLOATING_VIEW_ROTATION * (float) (sumX / (widthRule / 2.0));
-        //透明度是非线性变化，先慢后快。
-        float floatingViewAlpha = 1.0f - rate;
+        final float widthRule = mFloatingView.getWidth();
+        if (widthRule > 0) {
+            //套用y = x平方模型，来模拟，非线性动画效果()。
+            float rate = (float) Math.pow(Math.sqrt(sumX * sumX + sumY * sumY) / widthRule, 2.0);
+            //角度是线性变化（根据x轴的偏移）
+            floatingViewRotation = FLOATING_VIEW_ROTATION * (float) (sumX / (widthRule / 2.0));
+            //透明度是非线性变化，先慢后快。
+            floatingViewAlpha = 1.0f - rate;
 
-        if (floatingViewAlpha < 0.0f) {
-            floatingViewAlpha = 0.0f;
-        } else if (floatingViewAlpha > 1.0f) {
-            floatingViewAlpha = 1.0f;
+            if (floatingViewAlpha < 0.0f) {
+                floatingViewAlpha = 0.0f;
+            } else if (floatingViewAlpha > 1.0f) {
+                floatingViewAlpha = 1.0f;
+            }
+        } else {
+            // initial state, when floating view is not measured
+            floatingViewRotation = 0f;
+            floatingViewAlpha = 1f;
         }
+
 
         mFloatingView.setRotation(floatingViewRotation);
         mFloatingView.setAlpha(floatingViewAlpha);
