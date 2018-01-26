@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.example.chunyu.switchcardview.view.SwitchCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<rainmtime.com.switchcardview.SwitchCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/switch_cardview"
     android:layout_width="match_parent"
     android:layout_height="100dp">
 
-</com.example.chunyu.switchcardview.view.SwitchCardView>
+</rainmtime.com.switchcardview.SwitchCardView>
 

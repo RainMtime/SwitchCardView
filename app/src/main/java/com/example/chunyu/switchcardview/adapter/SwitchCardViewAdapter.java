@@ -1,8 +1,6 @@
 package com.example.chunyu.switchcardview.adapter;
 
 import android.content.Context;
-import android.database.DataSetObservable;
-import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.chunyu.switchcardview.R;
-import com.example.chunyu.switchcardview.view.SwitchCardView;
 
 import java.util.ArrayList;
+
+import rainmtime.com.switchcardview.SwitchCardView;
 
 /**
  * Created by 人间一小雨 on 2018/1/20 下午2:45
@@ -49,7 +48,7 @@ public class SwitchCardViewAdapter extends SwitchCardView.Adapter {
         return mData.size();
     }
 
-    public void setData(ArrayList<String> datas,int changeToIndex) {
+    public void setData(ArrayList<String> datas, int changeToIndex) {
         if (datas != null) {
             mData.clear();
             mData.addAll(datas);

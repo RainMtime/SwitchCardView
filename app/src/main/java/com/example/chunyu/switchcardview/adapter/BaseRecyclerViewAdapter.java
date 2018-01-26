@@ -10,9 +10,10 @@ import android.widget.Button;
 
 import com.example.chunyu.switchcardview.R;
 import com.example.chunyu.switchcardview.modle.RowData;
-import com.example.chunyu.switchcardview.view.SwitchCardView;
 
 import java.util.ArrayList;
+
+import rainmtime.com.switchcardview.SwitchCardView;
 
 /**
  * Created by 人间一小雨 on 2018/1/21 上午10:50

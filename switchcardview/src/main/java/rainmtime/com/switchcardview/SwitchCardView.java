@@ -1,4 +1,4 @@
-package com.example.chunyu.switchcardview.view;
+package rainmtime.com.switchcardview;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -23,11 +23,12 @@ import java.util.HashMap;
 import java.util.Observable;
 
 /**
- * Created by 人间一小雨 on 2018/1/20 上午11:21
+ * Created by 人间一小雨 on 2018/1/26 上午10:50
  * Email: 746431278@qq.com
  */
 
 public class SwitchCardView extends RelativeLayout {
+
 
     private static final String TAG = "BaseSwitchCardView";
     private static final float BOTTOM_VIEW_ROTATION = -3.0f;
@@ -596,6 +597,5 @@ public class SwitchCardView extends RelativeLayout {
             }
         }
     }
-
 
 }

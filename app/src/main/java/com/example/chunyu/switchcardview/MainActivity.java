@@ -1,17 +1,18 @@
 package com.example.chunyu.switchcardview;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.chunyu.switchcardview.activity.RecyclerViewTestActivity;
 import com.example.chunyu.switchcardview.adapter.SwitchCardViewAdapter;
-import com.example.chunyu.switchcardview.view.SwitchCardView;
 
 import java.util.ArrayList;
+
+import rainmtime.com.switchcardview.SwitchCardView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
