@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.novoda.bintray-release'
 
 
 android {
@@ -14,9 +13,6 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -28,33 +24,29 @@ android {
 
 }
 
-group = "switchcardview"
-version = "1.0.0"
+buildscript{
+    repositories{
+        jcenter()
+    }
 
-artifacts{
-
+    dependencies{
+        classpath 'com.novoda:bintray-release:0.8.0'
+    }
 }
 
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
 
-task generateJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+publish {
+    userOrg = 'rainmtime'
+    groupId = 'rainmtime_android'
+    artifactId = 'switchcardview'
+    publishVersion = '1.0.0'
+    desc = "this is a switch cardview repo ~.~"
+    website = 'https://github.com/RainMtime/SwitchCardView'
 }
-
-task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
-    from generateJavadocs.destinationDir
-    classifier 'javadoc'
-}
-
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'com.android.support:appcompat-v7:26.1.0'
-
+    implementation 'com.android.support:support-annotations:26.1.0'
 }

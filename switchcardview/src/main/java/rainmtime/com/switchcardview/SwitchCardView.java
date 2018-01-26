@@ -482,6 +482,7 @@ public class SwitchCardView extends RelativeLayout {
         /**
          * Notifies the attached observers that the underlying data has been changed
          * and any View reflecting the data set should refresh itself.
+         * @param position
          */
         public void notifyChangedToIndex(int position) {
             mCardViewDataSetObservable.notifyChangedToIndex(position);
@@ -491,6 +492,7 @@ public class SwitchCardView extends RelativeLayout {
         /**
          * 这个函数的目的，是创建一个最顶部的View，也就是无滑动的时候，展示数据的那个View。
          *
+         * @param parent
          * @return 返回最顶部的一个View。
          */
         @NonNull
@@ -499,6 +501,7 @@ public class SwitchCardView extends RelativeLayout {
         /**
          * 这个函数的目的，是创建一个底部的View ，也就是滑动的时候，底部跟着旋转的View（也就是顶部view下面的那个View）。
          *
+         * @param parent
          * @return 返回底部的一个View。
          */
         @NonNull
@@ -506,7 +509,7 @@ public class SwitchCardView extends RelativeLayout {
 
 
         /**
-         * @return 返回当前数据源的个数。如果size <1的话，手势滑动将失效。
+         * @return 返回当前数据源的个数。如果size小于1的话，手势滑动将失效。
          */
         public abstract int getItemCount();
 
