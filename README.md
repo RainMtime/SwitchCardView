@@ -1,22 +1,25 @@
-# SwitchCardView  [![](https://img.shields.io/badge/version-1.0.0-blue.svg)]() [![](https://img.shields.io/badge/License-Apache License 2.0-blue.svg)]()
+# SwitchCardView  [![](https://img.shields.io/badge/version-1.0.0-blue.svg)]()    [![](https://img.shields.io/badge/License-Apache License 2.0-blue.svg)]()
 
 
-#概述
+# 概述
 这是一个滑动切换卡片样式的View，可以用手指进行卡片的拖拽，当滑动距离小于一定的距离，卡片会自动回到卡片位置。
-#特点如下
+
+# 特点如下
 - 卡片可以可循环展示
 - 卡片可以嵌套在任何滑动组件中，如ListView，RecyclerView中，无需额外的滑动事件拦截处理
 - 卡片支持，小范围距离滑动，回归到卡片原始位置，并不进行数据切换
 - Adapter设计风格，View样式，数据源自定义设置即可。
 - 卡片从始至终只使用2个view（会复用）
 
-#效果图如下：
+# 效果图如下：
 ![compress](https://lh3.googleusercontent.com/-6fx98zLh3bs/Wmv7sPvz-OI/AAAAAAAAEes/NLSpZDgA9PwxS7Y-O1ngAJiOFjQa0F5vQCHMYCw/I/compress.gif)
+
 ps:录屏工具原因，会显得比较模糊
+
 ![compress3](https://lh3.googleusercontent.com/-BG2vZCgvJU4/Wmv_rVxnFcI/AAAAAAAAEe8/xrnSgtubMS4_3MDoFo1OYXpk-KsfI8yaACHMYCw/I/compress3.gif)
 
 
-#使用方法：
+# 使用方法：
 
 ```
 buildscript {
@@ -29,7 +32,9 @@ buildscript {
 }
 
 ```
+
 在xml中：
+
 
 ```
 <rainmtime.com.switchcardview.SwitchCardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -68,10 +73,12 @@ buildscript {
             }
         });
 ```
+
 **PS:具体实现，可以参考本项目的Demo即可。**
 
 
-#实现思路
+# 实现思路
+
 - 其实这个SwitchCardView，会有2个子View（一上一下），就是Adapter中createTopCardView（）和createBottomCardView（）返回的view，要2个view的目的，是数据预加载（2个），这样做动画的时候，衔接的比较好。
 
 - 手指滑动的过程中，其实只是一张假的bitmap。
