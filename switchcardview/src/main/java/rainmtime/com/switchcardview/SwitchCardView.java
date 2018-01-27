@@ -392,14 +392,11 @@ public class SwitchCardView extends RelativeLayout {
 
 
     private void addViewToDecorView(View view) {
-
-
-        ViewGroup viewGroup = getDecorView(getContext());
         ImageView tempImageView = new ImageView(getContext());
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tempImageView.setLayoutParams(layoutParams);
         tempImageView.setImageBitmap(createViewDrawable());
-        viewGroup.addView(tempImageView);
+        mDecorView.addView(tempImageView);
         int[] xy = new int[2];
         view.getLocationOnScreen(xy);
         tempImageView.setTranslationY(xy[1]);
@@ -564,7 +561,7 @@ public class SwitchCardView extends RelativeLayout {
     }
 
     private boolean checkValid() {
-        return mAdapter != null ? mAdapter.getItemCount() > 0 : false;
+        return  mAdapter!=null && mAdapter.getItemCount() >0;
     }
 
     private class CardViewAdapterDataSetObserver {
