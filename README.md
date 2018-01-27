@@ -1,5 +1,4 @@
-# SwitchCardView  [![](https://img.shields.io/badge/version-1.0.0-blue.svg)]()   
-[![](https://img.shields.io/badge/License-Apache License2.0-blue.svg)]()
+# SwitchCardView  [![](https://img.shields.io/badge/version-1.0.0-blue.svg)]()   [![](https://img.shields.io/badge/License-ApacheLicense2.0-blue.svg)]()
 
 
 # 概述
@@ -27,9 +26,10 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.rainmtime.androidtools:<latest-version>'
-    }
+}
+
+dependencies {
+      compile 'com.rainmtime.androidtools:switchcardview:1.0.0'
 }
 
 ```
@@ -85,7 +85,7 @@ buildscript {
 - 手指滑动的过程中，其实只是一张假的bitmap。
 - 数据切换逻辑就是，当第一张卡片的假身（bitmap）划走以后，把以前bottomView展示的数据，让TopView展示，拿第3个数据，让bottomView数据展示。这样就顺利的切换了数据（用户以为是卡片换，其实是数据，错位上移而已）
 
-#Demo参考
+# Demo参考
 这个项目有个app的module，里面有个简单的实例（就是第一张效果图的示例）
 
 
