@@ -37,7 +37,8 @@ buildscript{
 
 publish {
     userOrg = 'rainmtime'
-    groupId = 'rainmtime_android'
+    groupId = 'com.rainmtime.androidtools'
+    repoName = 'rainmtime_android'
     artifactId = 'switchcardview'
     publishVersion = '1.0.0'
     desc = "this is a switch cardview repo ~.~"
