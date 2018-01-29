@@ -1,4 +1,4 @@
-# SwitchCardView  [![](https://img.shields.io/badge/version-1.0.0-blue.svg)]()   [![](https://img.shields.io/badge/License-ApacheLicense2.0-blue.svg)]()
+# SwitchCardView  [![](https://img.shields.io/badge/version-1.0.0-blue.svg)]()   [![](https://img.shields.io/badge/License-MIT-blue.svg)]()
 
 
 # 概述
